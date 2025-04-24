@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import css from './SearchBar.module.css';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const notify = () => toast('Заповніть поле пошуку!');
 
