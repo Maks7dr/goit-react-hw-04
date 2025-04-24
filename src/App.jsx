@@ -1,39 +1,49 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchArticlesWithTopic } from './articles-api.js';
+
 import './App.css';
-import ArticleList from './components/others/ArticleList/ArticleList .jsx';
-import { SearchForm } from './components/others/SearchForm/SearchForm.jsx';
+import SearchBar from './components/SearchBar/SearchBar';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import { Toaster } from 'react-hot-toast';
+import { ClipLoader } from 'react-spinners';
 
-// const App = () => {
-//   const [articles, setArticles] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(false);
+export default function App() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [searchTopic, setSearchTopic] = useState('');
 
-//   const handleSearch = async (topic) => {
-//     try {
-//       setArticles([]);
-//       setError(false);
-//       setLoading(true);
-//       const data = await fetchArticlesWithTopic(topic);
-//       setArticles(data);
-//     } catch (error) {
-//       setError(true);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        setLoading(true);
+        setError(false);
+        const data = await fetchArticlesWithTopic(searchTopic);
+        setArticles(data);
+      } catch (error) {
+        setError(true);
+        setArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-//   return (
-//     <div>
-//       <h1>Latest articles</h1>
-//       <SearchForm onSearch={handleSearch} />
-//       {loading && <p style={{ fontSize: 20 }}>Loading data, please wait...</p>}
-//       {error && (
-//         <p>Whoops, something went wrong! Please try reloading this page!</p>
-//       )}
-//       {articles.length > 0 && <ArticleList items={articles} />}
-//     </div>
-//   );
-// };
+    fetchArticles();
+  }, [searchTopic]);
 
-export default App;
+  const handleSearchSubmit = (topic) => {
+    setSearchTopic(topic);
+  };
+
+  return (
+    <>
+      <SearchBar onSubmit={handleSearchSubmit} />
+      <Toaster position="top-right" reverseOrder={false} />
+      {loading && <ClipLoader size={35} />}
+      {error && (
+        <p>Whoops, something went wrong! Please try reloading this page!</p>
+      )}
+      {articles.length > 0 && <ImageGallery items={articles} />}
+    </>
+  );
+}

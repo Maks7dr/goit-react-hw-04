@@ -1,0 +1,22 @@
+.header {
+  background-color: #3f48fd;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.input {
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 15px;
+  font-size: 18px;
+}
+.btn {
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 18px;
+}

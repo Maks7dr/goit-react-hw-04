@@ -1,0 +1,13 @@
+.list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.item {
+  max-height: 225px;
+  overflow: hidden;
+  object-fit: cover;
+}
