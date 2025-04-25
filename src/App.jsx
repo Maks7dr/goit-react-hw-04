@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchArticlesWithTopic } from './articles-api.js';
+import { fetchUnsplashWithTopic } from './articles-api.js';
 
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
 
 export default function App() {
-  const [articles, setArticles] = useState([]);
+  const [imageData, setimageData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [searchTopic, setSearchTopic] = useState('');
@@ -27,18 +27,18 @@ export default function App() {
   };
 
   useEffect(() => {
-    async function fetchArticles() {
+    async function fetchUnsplash() {
       if (!searchTopic) {
         return;
       }
       try {
         setLoading(true);
         setError(false);
-        const data = await fetchArticlesWithTopic(searchTopic, page);
+        const data = await fetchUnsplashWithTopic(searchTopic, page);
         if (data && data.length > 0) {
-          setArticles((prevArticles) => [...prevArticles, ...data]);
+          setimageData((prevArticles) => [...prevArticles, ...data]);
         } else if (page === 1) {
-          setArticles([]);
+          setimageData([]);
           setHasMore(false);
         } else {
           setHasMore(false);
@@ -50,12 +50,12 @@ export default function App() {
       }
     }
 
-    fetchArticles();
+    fetchUnsplash();
   }, [searchTopic, page]);
 
   const handleSearchSubmit = (topic) => {
     setSearchTopic(topic);
-    setArticles([]);
+    setimageData([]);
     setPage(1);
     setHasMore(true);
   };
@@ -72,15 +72,15 @@ export default function App() {
       {error && (
         <p>Whoops, something went wrong! Please try reloading this page!</p>
       )}
-      {articles.length > 0 && (
-        <ImageGallery items={articles} onImageClick={handleImageClick} />
+      {imageData.length > 0 && (
+        <ImageGallery items={imageData} onImageClick={handleImageClick} />
       )}
       <ImageModal
         isOpen={!!selectedImage}
         image={selectedImage}
         onRequestClose={closeModal}
       />
-      {articles.length > 0 && hasMore && (
+      {imageData.length > 0 && hasMore && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
     </>
