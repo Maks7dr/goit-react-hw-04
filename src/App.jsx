@@ -18,12 +18,18 @@ export default function App() {
 
   useEffect(() => {
     async function fetchArticles() {
+      if (!searchTopic) {
+        return;
+      }
       try {
         setLoading(true);
         setError(false);
-        const data = await fetchArticlesWithTopic(searchTopic);
+        const data = await fetchArticlesWithTopic(searchTopic, page);
         if (data && data.length > 0) {
           setArticles((prevArticles) => [...prevArticles, ...data]);
+        } else if (page === 1) {
+          setArticles([]);
+          setHasMore(false);
         } else {
           setHasMore(false);
         }
@@ -39,6 +45,9 @@ export default function App() {
 
   const handleSearchSubmit = (topic) => {
     setSearchTopic(topic);
+    setArticles([]);
+    setPage(1);
+    setHasMore(true);
   };
 
   const handleLoadMore = () => {

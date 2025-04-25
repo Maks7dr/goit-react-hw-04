@@ -1,0 +1,10 @@
+.btn {
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-bottom: 30px;
+  transition: 250ms ease-in-out;
+  transition-property: background-color;
+}
+.btn:hover {
+  background-color: #b9b9b9;
+}

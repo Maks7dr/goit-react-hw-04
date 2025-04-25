@@ -18,5 +18,10 @@
 .btn {
   border-radius: 5px;
   border: 1px solid black;
-  font-size: 18px;
+  font-size: 20px;
+  transition: 250ms ease-in-out;
+  transition-property: background-color;
+}
+.btn:hover {
+  background-color: #b9b9b9;
 }
