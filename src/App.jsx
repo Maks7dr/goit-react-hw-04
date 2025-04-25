@@ -5,6 +5,7 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
 import { Toaster } from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
 
@@ -15,6 +16,15 @@ export default function App() {
   const [searchTopic, setSearchTopic] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
 
   useEffect(() => {
     async function fetchArticles() {
@@ -62,7 +72,14 @@ export default function App() {
       {error && (
         <p>Whoops, something went wrong! Please try reloading this page!</p>
       )}
-      {articles.length > 0 && <ImageGallery items={articles} />}
+      {articles.length > 0 && (
+        <ImageGallery items={articles} onImageClick={handleImageClick} />
+      )}
+      <ImageModal
+        isOpen={!!selectedImage}
+        image={selectedImage}
+        onRequestClose={closeModal}
+      />
       {articles.length > 0 && hasMore && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
