@@ -10,10 +10,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    // maxWidth: '90%',
-    // maxHeight: '90%',
     overflow: 'hidden',
-    // overflow: 'auto',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -26,10 +23,6 @@ export default function ImageCard({ newItem }) {
   function openModal() {
     setIsOpen(true);
   }
-
-  // function afterOpenModal() {
-  //   subtitle.style.color = '#f00';
-  // }
 
   function closeModal() {
     setIsOpen(false);
@@ -48,25 +41,18 @@ export default function ImageCard({ newItem }) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel={`Зображення: ${newItem.alt_description}`}
       >
         <img
           src={newItem.urls.regular}
           alt={newItem.alt_description}
           className={css.largeImage}
           style={{
-            maxWidth: '100%',
-            maxHeight: '100%',
+            maxWidth: '90%',
+            maxHeight: '90%',
             display: 'block',
             margin: '0 auto',
           }}
         />
-        {newItem.alt_description && (
-          <p className={css.description}>{newItem.alt_description}</p>
-        )}
-        <button onClick={closeModal} className={css.closeButton}>
-          Close
-        </button>
       </Modal>
     </div>
   );
